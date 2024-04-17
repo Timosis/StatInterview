@@ -1,5 +1,4 @@
-# Stat Interview
+# Stats Perfom Interview Project
 
-Open your web browser and visit http://localhost:3000.
-
-Also update Config.js at React Project according to your local Api port adress.
+Update Config.js at React Project according to your local Api port adress.
+After running .net api, run react project to see the result.
