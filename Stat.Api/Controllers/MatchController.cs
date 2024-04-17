@@ -18,12 +18,6 @@ public class MatchController : Controller
     public async Task<IActionResult> GetMatchesByLeagueId(string leagueId)
     {
         var matches = await _dataService.GetMatchesByLeagueId(leagueId);
-        
-        // Check if leagues is null or empty
-        if (matches == null || !matches.Any())
-        {
-            return NotFound("No matches found");
-        }
         return Ok(matches);
     }
     
@@ -31,14 +25,7 @@ public class MatchController : Controller
     public async Task<IActionResult> GetMatchesByBrandId(string leagueId, string brandId)
     {
         var matches = await _dataService.GetMatchesByBrandId(leagueId, brandId);
-        
-        // Check if leagues is null or empty
-        if (matches == null || !matches.Any())
-        {
-            return NotFound("No matches found");
-        }
         return Ok(matches);
     }
-    
     
 }

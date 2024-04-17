@@ -18,13 +18,6 @@ public class BrandController : Controller
     public async Task<IActionResult> GetBrandList()
     {
         var brandList = await _dataService.GetBrands();
-
-        // check brandlist is empty
-        if (brandList == null || !brandList.Any())
-        {
-            return NotFound("No brand found");
-        }
-        
         return Ok(brandList);
     }
     
@@ -32,13 +25,6 @@ public class BrandController : Controller
     public async Task<IActionResult> GetTeamListByBrandId(string brandId)
     {
         var teams = await _dataService.GetTeamListByBrandId(brandId);
-
-        // check brandlist is empty
-        if (teams == null || !teams.Any())
-        {
-            return NotFound("No brand found");
-        }
-        
         return Ok(teams);
     }
     

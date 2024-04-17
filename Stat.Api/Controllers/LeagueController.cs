@@ -18,13 +18,6 @@ public class LeagueController : ControllerBase
     public async Task<IActionResult> GetLeagues()
     {
         var leagues = await _dataService.GetLeagues();
-        
-        // Check if leagues is null or empty
-        if (leagues == null || !leagues.Any())
-        {
-            return NotFound("No leagues found");
-        }
-        
         return Ok(leagues);
     }
     
