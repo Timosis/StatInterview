@@ -162,18 +162,44 @@ public class DataService : IDataService
         var matchResponse = new ServiceResponse<IEnumerable<Match>>();
         try
         {
-            var matchData = await _client.GetStringAsync(_requestUri + $"leagues/{leagueId}/brands/{brandId}.json" + _sasToken);
-            matchResponse.Data = JsonConvert.DeserializeObject<IEnumerable<Match>>(matchData) ?? Enumerable.Empty<Match>();
+            var response = await _client.GetStringAsync(_requestUri + $"leagues/{leagueId}.json" + _sasToken);
+            var matches = JsonConvert.DeserializeObject<IEnumerable<Match>>(response) ?? Enumerable.Empty<Match>();
+
+            if (!string.IsNullOrEmpty(brandId))
+            {
+                var brandResponse = await _client.GetStringAsync(_requestUri + $"brands/{brandId}.json" + _sasToken);
+                var brand = JsonConvert.DeserializeObject<IEnumerable<TeamBrand>>(brandResponse) ?? Enumerable.Empty<TeamBrand>();
+                
+                foreach (var match in matches)
+                {
+                    var homeTeamBrand = brand.FirstOrDefault(b => b.TeamId == match.HomeTeam.Id);
+                    if (homeTeamBrand != null)
+                    {
+                        match.HomeTeam.Brand = new MatchBrand()
+                        {
+                            Name = homeTeamBrand.Name,
+                            PrimaryColor = homeTeamBrand.PrimaryColor
+                        };
+                    }
+
+                    var awayTeamBrand = brand.FirstOrDefault(b => b.TeamId == match.AwayTeam.Id);
+                    if (awayTeamBrand != null)
+                    {
+                        match.AwayTeam.Brand = new MatchBrand()
+                        {
+                            Name = awayTeamBrand.Name,
+                            PrimaryColor = awayTeamBrand.PrimaryColor
+                        };
+                    }
+                }
+            }
+
+            matchResponse.Data = matches ?? Enumerable.Empty<Match>();
+            matchResponse.Success = true;
         }
-        catch (HttpRequestException httpRequestException)
+        catch (Exception e)
         {
-            matchResponse.Message = $"An error occurred: {httpRequestException.Message}";
-            matchResponse.Success = false;
-            matchResponse.Data = Enumerable.Empty<Match>();
-        }
-        catch (Exception generalException)
-        {
-            matchResponse.Message = $"An unexpected error occurred: {generalException.Message}";
+            matchResponse.Message = $"An error occurred: {e.Message}";
             matchResponse.Success = false;
             matchResponse.Data = Enumerable.Empty<Match>();
         }
