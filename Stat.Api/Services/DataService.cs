@@ -6,13 +6,13 @@ namespace Stat.Api.Services;
 
 public class DataService : IDataService
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient  _client;
     private readonly string _sasToken;
     private readonly string _requestUri;
 
-    public DataService(HttpClient httpClient, IConfiguration configuration)
+    public DataService(IHttpClientFactory factory, IConfiguration configuration)
     {
-        _httpClient = httpClient;
+        _client = factory.CreateClient("StatClient");
         _sasToken = configuration.GetValue<string>("SasToken");
         _requestUri = configuration.GetValue<string>("RequestUri");
     }
@@ -21,7 +21,7 @@ public class DataService : IDataService
     {
         try
         {
-            var response = await _httpClient.GetStringAsync(_requestUri + "leagues.json" + _sasToken);
+            var response = await _client.GetStringAsync(_requestUri + "leagues.json" + _sasToken);
             var leagues = JsonConvert.DeserializeObject<List<League>>(response);
             return leagues;
         }
@@ -36,7 +36,7 @@ public class DataService : IDataService
     {
         try
         {
-            var response = await _httpClient.GetStringAsync(_requestUri + $"leagues/{leagueId}.json" + _sasToken);
+            var response = await _client.GetStringAsync(_requestUri + $"leagues/{leagueId}.json" + _sasToken);
             var leagueMatches = JsonConvert.DeserializeObject<IEnumerable<Match>>(response);
             return leagueMatches;
         }
@@ -51,7 +51,7 @@ public class DataService : IDataService
     {
         try
         {
-            var response = await _httpClient.GetStringAsync(_requestUri + $"brands.json" + _sasToken);
+            var response = await _client.GetStringAsync(_requestUri + $"brands.json" + _sasToken);
             var brands = JsonConvert.DeserializeObject<IEnumerable<Brand>>(response);
             return brands;
         }
@@ -66,7 +66,7 @@ public class DataService : IDataService
     {
         try
         {
-            var teamBrandResponse = await _httpClient.GetStringAsync(_requestUri + $"brands/{brandId}.json" + _sasToken);
+            var teamBrandResponse = await _client.GetStringAsync(_requestUri + $"brands/{brandId}.json" + _sasToken);
             var brands = JsonConvert.DeserializeObject<IEnumerable<TeamBrand>>(teamBrandResponse);
             return brands;
         }
@@ -81,12 +81,12 @@ public class DataService : IDataService
     {
         try
         {
-            var response = await _httpClient.GetStringAsync(_requestUri + $"leagues/{leagueId}.json" + _sasToken);
+            var response = await _client.GetStringAsync(_requestUri + $"leagues/{leagueId}.json" + _sasToken);
             var matches = JsonConvert.DeserializeObject<IEnumerable<Match>>(response);
 
             if (!string.IsNullOrEmpty(brandId))
             {
-                var brandResponse = await _httpClient.GetStringAsync(_requestUri + $"brands/{brandId}.json" + _sasToken);
+                var brandResponse = await _client.GetStringAsync(_requestUri + $"brands/{brandId}.json" + _sasToken);
                 var brand = JsonConvert.DeserializeObject<IEnumerable<TeamBrand>>(brandResponse);
 
                 foreach (var match in matches)
