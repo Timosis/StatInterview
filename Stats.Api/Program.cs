@@ -1,4 +1,4 @@
-using Stat.Api.Services;
+using Stats.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

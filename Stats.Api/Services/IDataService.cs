@@ -1,6 +1,6 @@
-using Stat.Api.Models;
+using Stats.Api.Models;
 
-namespace Stat.Api.Services;
+namespace Stats.Api.Services;
 
 public interface IDataService
 {

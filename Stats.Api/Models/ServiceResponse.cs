@@ -1,4 +1,4 @@
-namespace Stat.Api.Models;
+namespace Stats.Api.Models;
 
 public class ServiceResponse<T>
 {

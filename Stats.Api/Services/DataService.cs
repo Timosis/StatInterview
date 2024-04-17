@@ -1,8 +1,8 @@
 using System.Net;
 using Newtonsoft.Json;
-using Stat.Api.Models;
+using Stats.Api.Models;
 
-namespace Stat.Api.Services;
+namespace Stats.Api.Services;
 
 public class DataService : IDataService
 {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Stat.Api.Services;
+using Stats.Api.Services;
 
-namespace Stat.Api.Controllers;
+namespace Stats.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
