@@ -18,7 +18,7 @@ function App() {
 
 
     useEffect(() => {
-        axios.get(`${requestUri}/league`)
+        axios.get(`${requestUri}/league/GetLeagues`)
             .then(response => {
                 setLeagues(response.data.data);
             })
@@ -51,7 +51,7 @@ function App() {
     }
 
     useEffect(() => {
-        axios.get(`${requestUri}/Brand/GetBrandList`) // Fetch brands from /brand endpoint
+        axios.get(`${requestUri}/Brand`) // Fetch brands from /brand endpoint
             .then(response => {
                 setBrands(response.data.data);
             })
