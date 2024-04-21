@@ -8,8 +8,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6926f47-bd4b-4927-a2b6-1c358919d71c" name="Changes" comment="Refactor: Improved null safety in GetMatchesByBrandId method">
-      <change beforePath="$PROJECT_DIR$/Stat.Client/stat.web/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Stat.Client/stat.web/src/App.js" afterDir="false" />
+    <list default="true" id="a6926f47-bd4b-4927-a2b6-1c358919d71c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.StatInterview/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.StatInterview/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +148,7 @@
       <workItem from="1712587589802" duration="2754000" />
       <workItem from="1712673616256" duration="552000" />
       <workItem from="1713026204899" duration="1659000" />
-      <workItem from="1713346588401" duration="14882000" />
+      <workItem from="1713346588401" duration="16148000" />
     </task>
     <task id="LOCAL-00001" summary="Project is finished">
       <option name="closed" value="true" />
@@ -190,7 +190,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713369285440</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="updated project name.">
+      <option name="closed" value="true" />
+      <created>1713371746694</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1713371746694</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,6 +235,7 @@
     <MESSAGE value="Update HttpClient by using IHttpClientFactory." />
     <MESSAGE value="- Made Data property nullable in ServiceResponse&lt;T&gt; to fix CS8618 warnings -" />
     <MESSAGE value="Refactor: Improved null safety in GetMatchesByBrandId method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor: Improved null safety in GetMatchesByBrandId method" />
+    <MESSAGE value="updated project name." />
+    <option name="LAST_COMMIT_MESSAGE" value="updated project name." />
   </component>
 </project>

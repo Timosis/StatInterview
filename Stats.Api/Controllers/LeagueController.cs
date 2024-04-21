@@ -14,7 +14,7 @@ public class LeagueController : ControllerBase
         _dataService = dataService;
     }
 
-    [HttpGet]
+    [HttpGet("GetLeagues")]
     public async Task<IActionResult> GetLeagues()
     {
         var leagues = await _dataService.GetLeagues();

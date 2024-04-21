@@ -4,14 +4,14 @@ namespace Stats.Api.Services;
 
 public interface IDataService
 {
-    Task<ServiceResponse<IEnumerable<League>>> GetLeagues();
+    Task<ServiceResponse<List<League>>> GetLeagues();
     
-    Task<ServiceResponse<IEnumerable<Match>>> GetMatchesByLeagueId(string leagueId);
+    Task<ServiceResponse<List<Match>>> GetMatchesByLeagueId(string leagueId);
     
-    Task<ServiceResponse<IEnumerable<Brand>>> GetBrands();
+    Task<ServiceResponse<List<Brand>>> GetBrands();
     
-    Task<ServiceResponse<IEnumerable<TeamBrand>>> GetTeamListByBrandId(string brandId);
+    Task<ServiceResponse<List<TeamBrand>>> GetTeamListByBrandId(string brandId);
     
-    Task<ServiceResponse<IEnumerable<Match>>> GetMatchesByBrandId(string leagueId,string brandId);
+    Task<ServiceResponse<List<Match>>> GetMatchesByBrandId(string leagueId,string brandId);
     
 }

@@ -25,25 +25,23 @@ public class DataService : IDataService
     /// If the operation is successful, the Success property is true and the Data property contains the leagues.
     /// If the operation fails, the Success property is false and the Message property contains the error message.
     /// </returns>
-    public async Task<ServiceResponse<IEnumerable<League>>> GetLeagues()
+    public async Task<ServiceResponse<List<League>>> GetLeagues()
     {
-        var leagueResponse = new ServiceResponse<IEnumerable<League>>();
+        var leagueResponse = new ServiceResponse<List<League>>();
         try
         {
             var leagueData = await _client.GetStringAsync(_requestUri + "leagues.json" + _sasToken);
-            leagueResponse.Data = JsonConvert.DeserializeObject<List<League>>(leagueData) ?? Enumerable.Empty<League>();
+            leagueResponse.Data = JsonConvert.DeserializeObject<List<League>>(leagueData);
         }
         catch (HttpRequestException ex)
         {
             leagueResponse.Message = $"An error occurred: {ex.Message}";
             leagueResponse.Success = false;
-            leagueResponse.Data = Enumerable.Empty<League>();
         }
         catch (Exception ex)
         {
             leagueResponse.Message = $"An unexpected error occurred: {ex.Message}";
-            leagueResponse.Success = false;
-            leagueResponse.Data = Enumerable.Empty<League>();
+            leagueResponse.Success = false; 
         }
         
         return leagueResponse;
@@ -58,25 +56,23 @@ public class DataService : IDataService
     /// If the operation is successful, the Success property is true and the Data property contains the matches.
     /// If the operation fails, the Success property is false and the Message property contains the error message.
     /// </returns>
-    public async Task<ServiceResponse<IEnumerable<Match>>> GetMatchesByLeagueId(string leagueId)
+    public async Task<ServiceResponse<List<Match>>> GetMatchesByLeagueId(string leagueId)
     {
-        var matchResponse = new ServiceResponse<IEnumerable<Match>>();
+        var matchResponse = new ServiceResponse<List<Match>>();
         try
         {
             var matchData = await _client.GetStringAsync(_requestUri + $"leagues/{leagueId}.json" + _sasToken);
-            matchResponse.Data = JsonConvert.DeserializeObject<IEnumerable<Match>>(matchData) ?? Enumerable.Empty<Match>();
+            matchResponse.Data = JsonConvert.DeserializeObject<List<Match>>(matchData);
         }
         catch (HttpRequestException httpRequestException)
         {
             matchResponse.Message = $"An error occurred: {httpRequestException.Message}";
             matchResponse.Success = false;
-            matchResponse.Data = Enumerable.Empty<Match>();
         }
         catch (Exception generalException)
         {
             matchResponse.Message = $"An unexpected error occurred: {generalException.Message}";
             matchResponse.Success = false;
-            matchResponse.Data = Enumerable.Empty<Match>();
         }
         
         return matchResponse;
@@ -90,25 +86,23 @@ public class DataService : IDataService
     /// If the operation is successful, the Success property is true and the Data property contains the brands.
     /// If the operation fails, the Success property is false and the Message property contains the error message.
     /// </returns>
-    public async Task<ServiceResponse<IEnumerable<Brand>>> GetBrands()
+    public async Task<ServiceResponse<List<Brand>>> GetBrands()
     {
-        var brandResponse = new ServiceResponse<IEnumerable<Brand>>();
+        var brandResponse = new ServiceResponse<List<Brand>>();
         try
         {
             var brandData = await _client.GetStringAsync(_requestUri + "brands.json" + _sasToken);
-            brandResponse.Data = JsonConvert.DeserializeObject<IEnumerable<Brand>>(brandData) ?? Enumerable.Empty<Brand>();
+            brandResponse.Data = JsonConvert.DeserializeObject<List<Brand>>(brandData);
         }
         catch (HttpRequestException httpRequestException)
         {
             brandResponse.Message = $"An error occurred: {httpRequestException.Message}";
             brandResponse.Success = false;
-            brandResponse.Data = Enumerable.Empty<Brand>();
         }
         catch (Exception generalException)
         {
             brandResponse.Message = $"An unexpected error occurred: {generalException.Message}";
             brandResponse.Success = false;
-            brandResponse.Data = Enumerable.Empty<Brand>();
         }
 
         return brandResponse;
@@ -123,25 +117,23 @@ public class DataService : IDataService
     /// If the operation is successful, the Success property is true and the Data property contains the teams.
     /// If the operation fails, the Success property is false and the Message property contains the error message.
     /// </returns>
-    public async Task<ServiceResponse<IEnumerable<TeamBrand>>> GetTeamListByBrandId(string brandId)
+    public async Task<ServiceResponse<List<TeamBrand>>> GetTeamListByBrandId(string brandId)
     {
-        var teamBrandResponse = new ServiceResponse<IEnumerable<TeamBrand>>();
+        var teamBrandResponse = new ServiceResponse<List<TeamBrand>>();
         try
         {
             var teamBrandData = await _client.GetStringAsync(_requestUri + $"brands/{brandId}.json" + _sasToken);
-            teamBrandResponse.Data = JsonConvert.DeserializeObject<IEnumerable<TeamBrand>>(teamBrandData) ?? Enumerable.Empty<TeamBrand>();
+            teamBrandResponse.Data = JsonConvert.DeserializeObject<List<TeamBrand>>(teamBrandData);
         }
         catch (HttpRequestException httpRequestException)
         {
             teamBrandResponse.Message = $"An error occurred: {httpRequestException.Message}";
             teamBrandResponse.Success = false;
-            teamBrandResponse.Data = Enumerable.Empty<TeamBrand>();
         }
         catch (Exception generalException)
         {
             teamBrandResponse.Message = $"An unexpected error occurred: {generalException.Message}";
             teamBrandResponse.Success = false;
-            teamBrandResponse.Data = Enumerable.Empty<TeamBrand>();
         }
 
         return teamBrandResponse;
@@ -157,18 +149,18 @@ public class DataService : IDataService
     /// If the operation is successful, the Success property is true and the Data property contains the matches.
     /// If the operation fails, the Success property is false and the Message property contains the error message.
     /// </returns>
-    public async Task<ServiceResponse<IEnumerable<Match>>> GetMatchesByBrandId(string leagueId, string brandId)
+    public async Task<ServiceResponse<List<Match>>> GetMatchesByBrandId(string leagueId, string brandId)
     {
-        var matchResponse = new ServiceResponse<IEnumerable<Match>>();
+        var matchResponse = new ServiceResponse<List<Match>>();
         try
         {
             var response = await _client.GetStringAsync(_requestUri + $"leagues/{leagueId}.json" + _sasToken);
-            var matches = JsonConvert.DeserializeObject<IEnumerable<Match>>(response) ?? Enumerable.Empty<Match>();
+            var matches = JsonConvert.DeserializeObject<List<Match>>(response);
 
             if (!string.IsNullOrEmpty(brandId))
             {
                 var brandResponse = await _client.GetStringAsync(_requestUri + $"brands/{brandId}.json" + _sasToken);
-                var brand = JsonConvert.DeserializeObject<IEnumerable<TeamBrand>>(brandResponse) ?? Enumerable.Empty<TeamBrand>();
+                var brand = JsonConvert.DeserializeObject<List<TeamBrand>>(brandResponse);
                 
                 foreach (var match in matches)
                 {
@@ -194,14 +186,13 @@ public class DataService : IDataService
                 }
             }
 
-            matchResponse.Data = matches ?? Enumerable.Empty<Match>();
+            matchResponse.Data = matches;
             matchResponse.Success = true;
         }
         catch (Exception e)
         {
             matchResponse.Message = $"An error occurred: {e.Message}";
             matchResponse.Success = false;
-            matchResponse.Data = Enumerable.Empty<Match>();
         }
 
         return matchResponse;

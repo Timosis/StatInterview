@@ -14,14 +14,14 @@ public class BrandController : Controller
         _dataService = dataService;
     }
     
-    [HttpGet("GetBrandList")]
+    [HttpGet]
     public async Task<IActionResult> GetBrandList()
     {
         var brandList = await _dataService.GetBrands();
         return Ok(brandList);
     }
     
-    [HttpGet("GetTeamListByBrandId/{brandId}")]
+    [HttpGet("{brandId}")]
     public async Task<IActionResult> GetTeamListByBrandId(string brandId)
     {
         var teams = await _dataService.GetTeamListByBrandId(brandId);
